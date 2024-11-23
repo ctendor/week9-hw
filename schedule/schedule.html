@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduler Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color:white;
+        }
+
+        .container {
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header div {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .calendar-container {
+            border: 1px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-header button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .calendar-table th, .calendar-table td {
+            width: 14.28%;
+            height: 60px;
+            text-align: center;
+            border: 1px solid white;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .calendar-table th {
+            background-color: white;
+            font-weight: bold;
+        }
+
+        .calendar-table td:hover {
+            background-color: white;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .form-container input {
+            width: calc(100% - 20px);
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .team-merge {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .team-merge button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .team-merge button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-btn {
+            color: #dc3545;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>접속자: stageus | 부서: 경영 | 직급: 팀장</div>
+            <div class="logout-btn" onclick="logout()">로그아웃</div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button onclick="prevMonth()">&#9664;</button>
+                <span id="calendar-year">2024</span>년
+                <span id="calendar-month">12</span>월
+                <button onclick="nextMonth()">&#9654;</button>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                        <th>Sun</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <input type="date" id="schedule-date">
+            <input type="time" id="start-time">
+            <input type="time" id="end-time">
+            <input type="text" id="schedule-details" placeholder="일정 상세 ex) 미팅 or 점심식사">
+            <button onclick="addSchedule()">일정 추가</button>
+        </div>
+
+        <div class="team-merge">
+            <button onclick="mergeTeamSchedules()">팀원 일정 합치기</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateDayOfWeek(year, month, day) {
+            const baseYear = 2000;
+            const baseMonth = 1;
+            const baseDay = 1;
+            const baseWeekday = 6;
+            const date1 = new Date(baseYear, baseMonth - 1, baseDay);
+            const date2 = new Date(year, month - 1, day);
+            const diffDays = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
+            return (baseWeekday + diffDays % 7 + 7) % 7;
+        }
+
+        function renderCalendar(year, month) {
+            const calendarBody = document.getElementById('calendar-body');
+            calendarBody.innerHTML = '';
+            const totalDays = new Date(year, month, 0).getDate();
+            const firstDayOfWeek = calculateDayOfWeek(year, month, 1);
+            let row = document.createElement('tr');
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyCell = document.createElement('td');
+                row.appendChild(emptyCell);
+            }
+            for (let day = 1; day <= totalDays; day++) {
+                const cell = document.createElement('td');
+                cell.textContent = day;
+                cell.onclick = () => alert(`${year}-${month}-${day}`);
+                row.appendChild(cell);
+                if ((day + firstDayOfWeek) % 7 === 0) {
+                    calendarBody.appendChild(row);
+                    row = document.createElement('tr');
+                }
+            }
+            if (row.children.length > 0) {
+                calendarBody.appendChild(row);
+            }
+        }
+
+        let currentYear = 2024;
+        let currentMonth = 12;
+
+        function prevMonth() {
+            if (currentMonth === 1) {
+                currentMonth = 12;
+                currentYear -= 1;
+            } else {
+                currentMonth -= 1;
+            }
+            updateCalendar();
+        }
+
+        function nextMonth() {
+            if (currentMonth === 12) {
+                currentMonth = 1;
+                currentYear += 1;
+            } else {
+                currentMonth += 1;
+            }
+            updateCalendar();
+        }
+
+        function updateCalendar() {
+            document.getElementById('calendar-year').textContent = currentYear;
+            document.getElementById('calendar-month').textContent = currentMonth;
+            renderCalendar(currentYear, currentMonth);
+        }
+
+        function logout() {
+            alert('로그아웃 되었습니다.');
+            window.location.href = '/login';
+        }
+
+        function addSchedule() {
+            const date = document.getElementById('schedule-date').value;
+            const startTime = document.getElementById('start-time').value;
+            const endTime = document.getElementById('end-time').value;
+            const details = document.getElementById('schedule-details').value;
+            if (!date || !startTime || !endTime || !details) {
+                alert('모든 정보를 입력하세요.');
+                return;
+            }
+            alert(`일정 추가됨: ${date}, ${startTime} ~ ${endTime}, ${details}`);
+        }
+
+        function mergeTeamSchedules() {
+            alert('팀원의 일정이 팀장 일정에 합쳐졌습니다.');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCalendar();
+        });
+    </script>
+</body>
+</html>
