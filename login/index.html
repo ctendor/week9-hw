@@ -6,6 +6,15 @@
     <title>Stageus App</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="../common/root.css" />
+    <style>
+      /* 에러 메시지 스타일 추가 */
+      .error-message {
+        font-size: 12px;
+        color: red;
+        margin-top: 4px;
+        display: block;
+      }
+    </style>
   </head>
   <body>
     <h1>stageus</h1>
@@ -15,7 +24,9 @@
           <div>
             <label for="login-id">아이디</label>
             <input type="text" id="login-id" placeholder="아이디 입력" />
+            <span id="login-id-message"></span>
           </div>
+
           <div>
             <label for="login-password">비밀번호</label>
             <input
@@ -23,14 +34,17 @@
               id="login-password"
               placeholder="비밀번호 입력"
             />
+            <span id="login-password-message"></span>
           </div>
         </div>
+
         <div class="button-container">
           <button type="submit">로그인</button>
           <button type="button" id="signup-button">회원가입</button>
         </div>
       </form>
     </div>
-    <script src="scripts.js"></script>
+
+    <script type="module" src="login.js"></script>
   </body>
 </html>

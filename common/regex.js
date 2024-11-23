@@ -14,7 +14,7 @@ export function validateId(id) {
 }
 
 export function validatePassword(password) {
-  const pwRegex = /(?=.*\d)(?=.*[a-zA-Z]).{8,20}/;
+  const pwRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,20}$/;
   if (pwRegex.test(password)) {
     return {
       isValid: true,
