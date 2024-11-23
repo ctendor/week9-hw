@@ -8,7 +8,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-#login-page {
+#signup-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,16 +54,16 @@ button {
   border: none;
   border-radius: var(--size-border);
   cursor: pointer;
-  width: 45%;
+  width: 100%;
 }
 
 button:hover {
-  background-color: white;
+  background-color: #e0e0e0;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 button:active {
@@ -76,4 +76,8 @@ input:focus {
 
 span {
   color: red;
+  font-size: 12px;
+  display: block;
+  margin-top: 5px;
+  text-align: left;
 }

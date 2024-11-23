@@ -3,53 +3,35 @@ import { validateId, validatePassword } from "../common/regex.js";
 const idInput = document.getElementById("login-id");
 const passwordInput = document.getElementById("login-password");
 
-function createErrorMessage(inputElement, message) {
+function createErrorMessage(inputElement, validationResult) {
   let errorMessage = inputElement.nextElementSibling;
   if (errorMessage && errorMessage.classList.contains("error-message")) {
     errorMessage.remove();
   }
 
-  if (message) {
+  if (!validationResult.isValid) {
     const span = document.createElement("span");
-    span.textContent = message;
+    span.textContent = validationResult.message;
     span.classList.add("error-message");
     inputElement.parentNode.insertBefore(span, inputElement.nextSibling);
   }
 }
 
-idInput.addEventListener("input", function () {
-  const id = idInput.value;
-  const validation = validateId(id);
-
-  if (!validation.isValid) {
-    createErrorMessage(idInput, "8~20자 사이의 아이디를 입력하세요.");
-  } else {
-    createErrorMessage(idInput, "");
-  }
+idInput.addEventListener("change", function () {
+  const validation = validateId(idInput.value);
+  createErrorMessage(idInput, validation);
 });
 
-passwordInput.addEventListener("input", function () {
-  const password = passwordInput.value;
-  const validation = validatePassword(password);
-
-  if (!validation.isValid) {
-    createErrorMessage(
-      passwordInput,
-      "8~20자 사이의 대,소문자와 특수문자를 포함한 비밀번호를 입력해주세요."
-    );
-  } else {
-    createErrorMessage(passwordInput, "");
-  }
+passwordInput.addEventListener("change", function () {
+  const validation = validatePassword(passwordInput.value);
+  createErrorMessage(passwordInput, validation);
 });
 
 document
   .getElementById("login-form")
   .addEventListener("submit", function (event) {
-    const id = idInput.value;
-    const password = passwordInput.value;
-
-    const idValidation = validateId(id);
-    const passwordValidation = validatePassword(password);
+    const idValidation = validateId(idInput.value);
+    const passwordValidation = validatePassword(passwordInput.value);
 
     if (!idValidation.isValid || !passwordValidation.isValid) {
       event.preventDefault();
@@ -58,3 +40,7 @@ document
       alert("로그인 성공!");
     }
   });
+
+document.getElementById("signup-button").addEventListener("click", function () {
+  window.location.href = "../signup/signup.html";
+});
