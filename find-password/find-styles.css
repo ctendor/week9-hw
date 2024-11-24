@@ -8,7 +8,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-#login-page {
+#find-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,10 +21,6 @@ form {
   padding: 30px 20px;
   width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-form div {
-  margin-bottom: 0px;
 }
 
 .input-container {
@@ -54,16 +50,16 @@ button {
   border: none;
   border-radius: var(--size-border);
   cursor: pointer;
-  width: 45%;
+  width: 100%;
 }
 
 button:hover {
-  background-color: white;
+  background-color: #e0e0e0;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 button:active {
@@ -76,4 +72,5 @@ input:focus {
 
 span {
   color: red;
+  font-size: 12px;
 }

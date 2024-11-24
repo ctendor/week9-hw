@@ -3,7 +3,6 @@ export function validateId(id) {
   if (idRegex.test(id)) {
     return {
       isValid: true,
-      message: "아이디가 유효합니다.",
     };
   } else {
     return {
@@ -18,12 +17,11 @@ export function validatePassword(password) {
   if (pwRegex.test(password)) {
     return {
       isValid: true,
-      message: "비밀번호가 유효합니다.",
     };
   } else {
     return {
       isValid: false,
-      message: "비밀번호는 8~20자, 영문과 숫자를 포함해야 합니다.",
+      message: "비밀번호는 8~20자, 영숫자와 특수문자를 포함해야 합니다.",
     };
   }
 }
@@ -33,7 +31,6 @@ export function validateEmail(email) {
   if (emailRegex.test(email)) {
     return {
       isValid: true,
-      message: "이메일이 유효합니다.",
     };
   } else {
     return {

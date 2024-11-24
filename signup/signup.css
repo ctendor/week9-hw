@@ -18,8 +18,8 @@ h1 {
 form {
   background-color: var(--color-blue);
   border-radius: var(--size-border);
-  padding: 30px 20px;
-  width: 300px;
+  padding: 40px 30px;
+  width: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -32,7 +32,7 @@ form div {
 }
 
 .input-container label {
-  display: block;
+  display: flex;
   font-size: 14px;
   color: white;
   margin-bottom: 5px;
@@ -44,6 +44,22 @@ form div {
   padding: 10px;
   border: none;
   border-radius: 4px;
+}
+
+.radio-container label {
+  display: flex;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.radio-container > .radio-group {
+  width: auto;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
 }
 
 button {
@@ -80,4 +96,14 @@ span {
   display: block;
   margin-top: 5px;
   text-align: left;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.radio-group input[type="radio"] {
+  margin: 0;
 }
