@@ -44,12 +44,12 @@ document
 document
   .getElementById("find-id-button")
   .addEventListener("click", function () {
-    window.location.href = "../find/find-id.html";
+    window.location.href = "../find-id/find-id.html";
   });
 document
   .getElementById("find-password-button")
   .addEventListener("click", function () {
-    window.location.href = "../find/find-password.html";
+    window.location.href = "../find-password/find-password.html";
   });
 
 document.getElementById("signup-button").addEventListener("click", function () {
